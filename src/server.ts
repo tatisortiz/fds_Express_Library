@@ -10,7 +10,7 @@ app.get('/healthy', (req, res) => {
 })
 
 app.listen(4000, () => {
-console.log(`server is running`);
+console.log(`server is running on port 40`);
 
 
 
