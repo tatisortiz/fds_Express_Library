@@ -47,10 +47,7 @@ export const createAuthor = async (req: Request, res: Response) => {
         ///5 responder
     
         
-    
-    
-        
-         res.json (
+           res.json (
             {
              success: true,
              message: 'Author created successfully',
@@ -68,6 +65,36 @@ export const createAuthor = async (req: Request, res: Response) => {
     
  }
 }
+
+
+export const getAllAuthors = async (req: Request, res: Response) =>{
+    try {
+        ///1 recuperar la inf de la BD
+      const authors =  await Author.find()
+
+      //2 responder la inf de la BD
+      res.json(
+        {
+            success: false,
+            message: "all author retrieve successfully",
+            data: authors
+        }
+      )
+
+
+
+
+    } catch (error) {
+        res.status(500).json(
+            {
+                success: false, 
+                message: "cant retrieve authors",
+                error: error
+            }
+        )
+        
+    }
+       }
 
 export const updateAuthorById = (req: Request, res: Response) =>{
     console.log(req.params.id);

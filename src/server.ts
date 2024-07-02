@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import {  auhtordetailById, authoractualizaById, authordeleteById, authorslist,  authorsnewById, createAuthor, deleteAuthorById, updateAuthorById } from './controllers/authors.controllers';
+import {  auhtordetailById, authoractualizaById, authordeleteById, authorslist,  authorsnewById, createAuthor, deleteAuthorById, getAllAuthors, updateAuthorById } from './controllers/authors.controllers';
 import { BookActualizaId, BookEliminadoId, BooksNewsById, booksListes, booksNew, createBooks, deleteBookById, updateBookById } from './controllers/books.controller';
 import { createFavourite, deleteFavouriteById, updateFavouriteById } from './controllers/favourites.controllers';
 import { createLoans, deleteLoansById, loansDeteilId, loansList, loansactualizaprest, loansactualprest, loanseliminprest, loansprestamo, loansprestamonews, updateLoansById } from './controllers/loans.controllers';
@@ -27,6 +27,7 @@ app.get('/healthy', (req, res) => {
  app.post('/authors', createAuthor);
  app.put('/authors/:id', updateAuthorById);
  app.delete('/authors/:id', deleteAuthorById);
+ app.get('/authors',getAllAuthors);
 
 // // BOOKS
  app.get('/books', (req, res) => {
