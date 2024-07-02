@@ -96,10 +96,46 @@ export const getAllAuthors = async (req: Request, res: Response) =>{
     }
        }
 
-export const updateAuthorById = (req: Request, res: Response) =>{
-    console.log(req.params.id);
+export const updateAuthorById = async (req: Request, res: Response) =>{
+   try {
+    /////1. recuperar la inf
+   const authorIdToUpdate = req.params.id
+   const body = req.body
 
-    res.send(`author update with ${req.params.id}`)
+   ///2. validar la informaccion, 
+    //aqui se podria validar un ejemplo la contraseña
+
+
+    //3 tratar la infor , no es necesario aqui 
+
+
+    //4 actualizar base de datos , aqui se actuliazan los modelos
+  const authorUpdated = await Author.update (
+        {
+            id: parseInt(authorIdToUpdate)
+        },
+        body
+    )
+     
+    /// responder 
+
+    res.status(200).json(
+        {
+            success: true,
+            message: "author updated",
+            data: authorUpdated
+        }
+    )
+
+   } catch (error) {
+    res.status(500).json(
+        {
+            success: false,
+            message: "author cant be updated",
+            error: error
+        }
+    )
+   }
 }
 
 
