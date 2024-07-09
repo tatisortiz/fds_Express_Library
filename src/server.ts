@@ -1,11 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
 import {  auhtordetailById, authoractualizaById, authordeleteById, authorslist,  authorsnewById, createAuthor, deleteAuthorById, getAllAuthors, updateAuthorById } from './controllers/authors.controllers';
-import { BookActualizaId, BookEliminadoId, BooksNewsById, booksListes, booksNew, createBooks, deleteBookById, updateBookById } from './controllers/books.controller';
+import { BookActualizaId, BookEliminadoId, BooksNewsById, booksListes, booksNew, createBooks, deleteBookById, getAllBooks, updateBookById } from './controllers/books.controller';
 import { createFavourite, deleteFavouriteById, updateFavouriteById } from './controllers/favourites.controllers';
 import { createLoans, deleteLoansById, loansDeteilId, loansList, loansactualizaprest, loansactualprest, loanseliminprest, loansprestamo, loansprestamonews, updateLoansById } from './controllers/loans.controllers';
-import { createUsers, deleteUsersById, updateUsersById, usersProfile, usersActualiza, usersFavourites, usersFavouritesBooks, deleteMyFavorite, newUser, userLists} from './controllers/users.controllers';
+import { usersProfile, usersActualiza, usersFavourites, usersFavouritesBooks, deleteMyFavorite, newUser, userLists, getAllUsers, getUserProfile, getUserFavoritesBooks} from './controllers/users.controllers';
 import { AppDataSource } from './database/db';
+import { login, register } from './controllers/auth.controller';
+import { auth } from './middlewares/auth';
+import { isAdmin } from './middlewares/isAdmin';
+
 
 const app = express();
 
@@ -24,18 +28,25 @@ app.get('/healthy', (req, res) => {
 
 
 // // AUTHORS
- app.post('/authors', createAuthor);
+ app.post('/authors',auth, createAuthor);
  app.put('/authors/:id', updateAuthorById);
  app.delete('/authors/:id', deleteAuthorById);
- app.get('/authors',getAllAuthors);
+ app.get('/authors',  getAllAuthors);
 
 // // BOOKS
- app.get('/books', (req, res) => {
-     res.send('GET ALL BOOKS');
- });
+
  app.post('/books', createBooks);
- app.put('/books/:id', updateBookById);
- app.delete('/books/:id', deleteBookById);
+ app.get ('/books',getAllBooks);
+ app.put('/books/:id', auth,updateBookById);
+ app.delete('/books/:id', auth, deleteBookById);
+
+
+///auth////
+app.post ('/register',register);
+app.post('/login', login);
+
+
+
 
 // // LOANS
  app.get('/loans', (req, res) => {
@@ -46,20 +57,23 @@ app.get('/healthy', (req, res) => {
  app.delete('/loans/:id', deleteLoansById);
 
 // // FAVOURITES
- app.get('/favourites', (req, res) => {
-     res.send('GET ALL favourites');
- });
- app.post('/favourites', createFavourite);
+
+app.post('/favourites',auth, createFavourite);
 app.put('/favourites/:id', updateFavouriteById);
- app.delete('/favourites/:id', deleteFavouriteById);
+app.delete('/favourites/:id', auth , deleteFavouriteById);
 
 // // USER
-app.get('/users', (req, res) => {
-   res.send('GET ALL users');
- });
- app.post('/users', createUsers);
- app.put('/users/:id', updateUsersById);
- app.delete('/users/:id', deleteUsersById);
+
+ app.get('/users',auth, isAdmin, getAllUsers);
+ app.get('/profile', auth, getUserProfile);
+ app.get('/users/favourites',auth, getUserFavoritesBooks)
+
+
+//  app.post('/users', createUsers);
+//  app.put('/users/:id', updateUsersById);
+//  app.delete('/users/:id', deleteUsersById);
+
+
 
 
 

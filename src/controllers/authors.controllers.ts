@@ -1,5 +1,6 @@
+
 import { Request, Response } from "express";
-import { Author } from "../database/models/Author";
+import { Author } from "../database/models/authors";
 
 export const createAuthor = async (req: Request, res: Response) => {
  ////.1 recuperar la informacion de la req
@@ -70,7 +71,20 @@ export const createAuthor = async (req: Request, res: Response) => {
 export const getAllAuthors = async (req: Request, res: Response) =>{
     try {
         ///1 recuperar la inf de la BD
-      const authors =  await Author.find()
+        let limit= Number(req.query.limit || 5)
+        const page=  Number(req.query.page || 1)
+
+        if(limit>20){
+            limit=20
+        }
+
+
+
+
+        const authors =  await Author.find({
+        skip:(page-1)*limit,  /// 
+        take:limit
+      })
 
       //2 responder la inf de la BD
       res.json(
@@ -159,7 +173,7 @@ export const deleteAuthorById = async (req: Request, res: Response) => {
    /// 3. responde 
    res.status(200).json(
     {
-        success: false,
+        success: true,
         message: "author deleting author",
         data: authorDeleted
     }

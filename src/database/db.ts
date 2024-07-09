@@ -2,8 +2,9 @@
 import "reflect-metadata"
 import 'dotenv/config';
 import { DataSource } from "typeorm"
-import { Author1719825085793 } from "./migrations/1719825085793-author"
-import { User1719829631989 } from "./migrations/1719829631989-user";
+import { Authors1719829631989 } from "./migrations/1719829631989-authors";
+import { User1719825085793 } from "./migrations/1719825085793-user";
+
 import { Books1719832332447 } from "./migrations/1719832332447-books";
 
 

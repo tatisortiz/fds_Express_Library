@@ -14,31 +14,27 @@ export class Books1719832332447 implements MigrationInterface {
                         isGenerated: true,
                         generationStrategy: "increment",
                     },
-                
                     {
                         name: "title",
                         type: "varchar",
-                        length: "250",
+                        length: "255",
                     },
                     {
                         name: "description",
-                        type: "varchar",
-                        length: "250",
+                        type: "text"
                     },
                     {
                         name: "author_id",
-                        type: "int",
-                       
+                        type: "int"
                     },
                 ],
-                
-             foreignKeys:[
-                {
-                    columnNames: ['author_id'],
-                    referencedTableName: 'authors',
-                    referencedColumnNames: ['id']
-                }
-             ]
+                foreignKeys: [
+                    {
+                        columnNames: ['author_id'],
+                        referencedTableName: 'authors',
+                        referencedColumnNames: ['id']
+                    }
+                ]
             }),
             true
         );
